@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!--Body Start-->
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" type="text" id="generatedPin">
+                    <button class="generate-btn" id="generatorBtn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" type="text" id="pinOutput">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button" id="7" onclick="inputNum(7)">7</div>
+                              <div class="button" id="8" onclick="inputNum(8)">8</div>
+                              <div class="button" id="9" onclick="inputNum(9)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" id="4" onclick="inputNum(4)">4</div>
+                              <div class="button" id="5" onclick="inputNum(5)">5</div>
+                              <div class="button" id="6" onclick="inputNum(6)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" id="1" onclick="inputNum(1)">1</div>
+                              <div class="button" id="2" onclick="inputNum(2)">2</div>
+                              <div class="button" id="3" onclick="inputNum(3)">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="clearNum"><</div>
+                                <div class="button" id="0" onclick="inputNum(0)">0</div>
+                                <div class="button" id="clearAll">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn" id="submitPin">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify" id="unsuccessPin">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="successPin">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+
+    <!--Script Coding Start-->
+    <script>
+        document.getElementById('generatorBtn').addEventListener('click',function(){
+            randomNum= (Math.random()*9999);
+            randomInt = Math.round(randomNum);
+            if(randomInt>999){
+                document.getElementById('generatedPin').value = randomInt;
+            }
+        })
+        function inputNum(id){
+        document.getElementById('pinOutput').value += document.getElementById(id).innerText;
+        }
+        document.getElementById('clearAll').addEventListener('click',function(){
+            document.getElementById('pinOutput').value = "";
+        })
+        function backSpace(){
+            return document.getElementById('pinOutput').value.slice(0,-1);
+        }
+        document.getElementById('clearNum').addEventListener('click',function(){
+            document.getElementById('pinOutput').value = backSpace();
+        })
+        document.getElementById('submitPin').addEventListener('click',function(){
+            let inputPin = document.getElementById('pinOutput').value;
+            let generatorOutput = document.getElementById('generatedPin').value;
+            if(inputPin == generatorOutput){
+                document.getElementById('successPin').style.display = "block";
+                document.getElementById('unsuccessPin').style.display = "none"
+            }
+            else{
+                document.getElementById('unsuccessPin').style.display = "block";
+                document.getElementById('successPin').style.display = "none";
+            }
+        })
+
+    </script>
+    <!--Script Coding End-->
+
+</body>
+    <!--Body End-->
+</html>
